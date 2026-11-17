@@ -1,6 +1,6 @@
 # GPT Transcribe MCP
 
-A small Python MCP server exposing `transcribe_audio`, copied from the original local OpenAI audio MCP used for narration review. The server sends a WAV recording to the OpenAI Audio Transcriptions API using model `gpt-transcribe` and requests Chinese output.
+A small Python MCP server exposing `transcribe_audio`, copied from the original local OpenAI audio MCP used for narration review. The server sends a WAV recording to the OpenAI Audio Transcriptions API using model `gpt-transcribe` and requests Chinese output by default; pass `language` for other languages.
 
 ## Requirements
 
@@ -36,6 +36,6 @@ Configure an MCP client to start the environment's Python interpreter with the a
 
 ## Use
 
-Call `transcribe_audio` with `{"audio_path": "C:\\absolute\\path\\narration.wav"}`. The result contains the transcript, duration, SHA-256, model name, request ID, and any usage reported by the API. The response does not contain word timestamps and does not verify pronunciation, completeness, or subtitle synchronization. Review audio manually for those purposes.
+Call `transcribe_audio` with `{"audio_path": "C:\\absolute\\path\\narration.wav"}`. Optional `language` is a two-letter hint (`"zh"` default, `"en"` for English dialogue) or `"auto"` to let the model detect it. The result contains the transcript, duration, SHA-256, model name, request ID, and any usage reported by the API. The response does not contain word timestamps and does not verify pronunciation, completeness, or subtitle synchronization. Review audio manually for those purposes.
 
 The original code is intentionally limited to short Chinese WAV inputs; it does not split long recordings. The included checks do not call the live API. Live model access and transcription are not verified by those checks.
