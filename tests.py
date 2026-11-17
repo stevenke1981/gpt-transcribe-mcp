@@ -42,5 +42,15 @@ class ServerTests(unittest.TestCase):
             response.raise_for_status.assert_called_once()
 
 
+    def test_bad_language(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'sample.wav'
+            with wave.open(str(path), 'wb') as wav:
+                wav.setnchannels(1); wav.setsampwidth(2); wav.setframerate(8000)
+                wav.writeframes(b'\0\0' * 8000)
+            with self.assertRaisesRegex(ValueError, 'language'):
+                server.transcribe_audio(str(path), language='english')
+
+
 if __name__ == '__main__':
     unittest.main()
